@@ -1,0 +1,27 @@
+{
+  "name": "wordlebot",
+  "version": "1.0.0",
+  "description": "A friendly Bot that will help rank Wordle scores in Discord",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dals1791/WordleBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dals1791/WordleBot/issues"
+  },
+  "homepage": "https://github.com/dals1791/WordleBot#readme",
+  "dependencies": {
+    "@discordjs/collection": "^0.4.0",
+    "discord.js": "^13.5.1",
+    "dotenv": "^11.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
