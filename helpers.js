@@ -36,12 +36,33 @@ module.exports.filterByUser = filterByUser = (messages) => {
   return data;
 };
 
+module.exports.calcWordleDay = calcWordleDay = () => {
+  const wordleStartingDay = 240;
+  const wordleStartDate = Math.floor(
+    new Date(2022, 1, 14).getTime() / (1000 * 60 * 60 * 24)
+  );
+  const today = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+  const day = wordleStartingDay + Math.floor(today - wordleStartDate) - 1;
+  return day;
+};
+
 module.exports.createReply = createReply = (data, guildId) => {
-  const finishedUsers = ["These", "users", "completed\nWordle", "211:\n"];
+  const wordleDay = this.calcWordleDay();
+  let finishedUsers = [
+    "These",
+    "users",
+    "completed\nWordle",
+    `${wordleDay}:\n`,
+  ];
   const entries = data[guildId];
   Object.entries(entries).forEach(([key, value]) => {
-    const userCompletedDay = Object.keys(value).includes("211"); // Replace with dynamic Wordle Day Variable
-    if (userCompletedDay) finishedUsers.push(key + "\n");
+    const userCompletedDay = Object.keys(value).includes(parseInt(wordleDay));
+
+    if (userCompletedDay) {
+      finishedUsers.push(key + "\n");
+    } else {
+      finishedUsers = ["No one has completed the Wordle today"];
+    }
   });
 
   return finishedUsers.join(" ");

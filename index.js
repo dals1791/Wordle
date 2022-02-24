@@ -1,7 +1,8 @@
 require("dotenv").config();
 const { filterByUser, createReply } = require("./helpers.js");
+const { fetchHistory } = require("./fetchHistory");
 
-const { Client, Intents, Collection } = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const {
   FLAGS: { GUILDS, GUILD_MESSAGES },
 } = Intents;
@@ -10,7 +11,8 @@ const client = new Client({
 });
 
 const TOKEN = process.env.BOT_TOKEN;
-console.log();
+const timeHours = new Date().getHours();
+
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -20,15 +22,16 @@ client.on("messageCreate", (msg) => {
   const guild = msg.guildId;
 
   if (msg.author.bot) return;
-  if (msg.content.includes("Wordle")) {
-    channel.messages
-      .fetch()
+  if (msg.content.includes("Wordle") || timeHours == 0) {
+    fetchHistory(channel)
       .then(async (messages) => {
         const data = filterByUser(messages);
         return createReply(data, guild);
       })
-      .then(async (reply) => console.log(reply))
-      .catch(console.error());
+      .then((reply) => {
+        channel.send(reply);
+      })
+      .catch((err) => console.log(err));
   }
 });
 
