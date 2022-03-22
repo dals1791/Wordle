@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 module.exports.filterByUser = filterByUser = (messages) => {
   let data = {};
   messages.each((value, key) => {

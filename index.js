@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { filterByUser, createReply } = require("./helpers.js");
 const { fetchHistory } = require("./fetchHistory");
 
@@ -23,7 +22,8 @@ client.on("messageCreate", (msg) => {
 
   if (msg.author.bot) return;
   if (msg.content.includes("Wordle") || timeHours == 0) {
-    fetchHistory(channel)
+    const messages = fetchHistory(channel);
+    return messages
       .then(async (messages) => {
         const data = filterByUser(messages);
         return createReply(data, guild);
@@ -31,7 +31,7 @@ client.on("messageCreate", (msg) => {
       .then((reply) => {
         channel.send(reply);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("here", err));
   }
 });
 
