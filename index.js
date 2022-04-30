@@ -26,10 +26,12 @@ client.on("messageCreate", (msg) => {
     return messages
       .then(async (messages) => {
         const data = filterByUser(messages);
+        console.log(data[guild].dals1791)
         return createReply(data, guild);
       })
       .then((reply) => {
-        channel.send(reply);
+        console.log(reply)
+        // channel.send(reply);
       })
       .catch((err) => console.log("here", err));
   }
